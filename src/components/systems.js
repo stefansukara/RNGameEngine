@@ -1,23 +1,21 @@
-const RotateFingers = (entities, { touches }) => {
-  //-- I'm choosing to update the game state (entities) directly for the sake of brevity and simplicity.
-  //-- There's nothing stopping you from treating the game state as immutable and returning a copy..
-  //-- Example: return { ...entities, t.id: { UPDATED COMPONENTS }};
-  //-- That said, it's probably worth considering performance implications in either case.
+const RotateSquare = (entities, { touches }) => {
   touches
     .filter(touch => {
-      return touch.type === 'move';
+      return touch.type === 'move' && touch.event.touches.length === 1;
     })
     .forEach(touch => {
-      let finger = entities[touch.id];
-      if (finger && finger.position) {
-        finger.position = [
-          finger.position[0] + touch.delta.pageX,
-          finger.position[1] + touch.delta.pageY
-        ];
-      }
+      let square = entities[touch.id];
+      // const touchX = touch.event.locationX;
+      const touchY = touch.event.pageY;
+      console.log('touchY', touchY);
+      const moveX = touch.delta.pageX;
+      if (moveX > 0) square.degree += 2;
+      if (moveX < 0) square.degree -= 2;
+      // if (moveX > 0 && touchY <= 120 && touchY > 0) square.degree += 2;
+      // if (moveX < 0 && touchY > 120 && touchY < 240) square.degree -= 2;
     });
 
   return entities;
 };
 
-export { RotateFingers };
+export { RotateSquare };

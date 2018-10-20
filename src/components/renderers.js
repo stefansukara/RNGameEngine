@@ -1,29 +1,50 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
-const RADIUS = 120;
-
-class Finger extends PureComponent {
+class Square extends PureComponent {
   render() {
     const {
-      props: { position }
+      props: {
+        degree,
+        position: { width, height },
+        ...props
+      }
     } = this;
-    const x = position[0] - RADIUS / 2;
-    const y = position[1] - RADIUS / 2;
-    return <View style={[styles.finger, { left: x, top: y }]} />;
+    const x = width * 0.3;
+    const y = height * 0.4;
+    return (
+      <View
+        style={[
+          styles.square,
+          {
+            left: -x,
+            top: y,
+            transform: [{ rotate: `${degree}deg` }]
+          }
+        ]}
+      >
+        <Text style={styles.squareText}>Let's play</Text>
+      </View>
+    );
   }
 }
 
 const styles = StyleSheet.create({
-  finger: {
+  square: {
     borderColor: '#CCC',
     borderWidth: 4,
-    borderRadius: RADIUS / 2,
-    width: RADIUS * 2,
-    height: RADIUS * 2,
+    borderRadius: 60,
+    width: 240,
+    height: 240,
     backgroundColor: '#123456',
-    position: 'absolute'
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  squareText: {
+    fontSize: 20,
+    color: 'white'
   }
 });
 
-export { Finger };
+export { Square };
